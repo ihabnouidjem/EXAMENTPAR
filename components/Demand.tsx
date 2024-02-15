@@ -1,10 +1,13 @@
+import { TechieCard } from "./TechieCard";
+
 export const Demand = ({ demand }: { demand: any }) => {
+  console.log(demand);
   return (
     <div className="w-[min(800px,100%)] bg-white p-3 gap-3 rounded-xl flex flex-col">
       <div className="w-full flex flex-col">
         <p className="w-full text-[22px] font-medium text-zinc-900 ">ID</p>
         <p className="w-full text-[18px] font-medium text-zinc-700 ">
-          1fv5d1v65s4rvv6155vdfv89+
+          {demand._id}
         </p>
       </div>
       <div className="w-full flex flex-col">
@@ -12,7 +15,7 @@ export const Demand = ({ demand }: { demand: any }) => {
           Destination
         </p>
         <p className="w-full text-[18px] font-medium text-zinc-700 ">
-          Oran, hay el senia N 130
+          {demand.localisation}
         </p>
       </div>
       <div className="w-full flex flex-col">
@@ -36,10 +39,7 @@ export const Demand = ({ demand }: { demand: any }) => {
           Client Problem
         </p>
         <p className="w-full text-[18px] font-medium text-zinc-700 ">
-          problem problem problem problem problem proeblem problem problem
-          problem problem problem proeblem problem problem problem problem
-          problem proeblem problem problem problem problem problem proeblem
-          problem problem problem problem problem proeblem
+          {demand.problem}
         </p>
       </div>
       <div className="w-full flex flex-col">
@@ -47,16 +47,11 @@ export const Demand = ({ demand }: { demand: any }) => {
           Tech Team
         </p>
         <div className="w-full flex flex-row flex-wrap gap-3">
-          {[1, 2, 3, 4, 5].map((client, index) => {
-            return (
-              <p
-                key={index}
-                className="text-[16px] font-medium text-zinc-700 bg-zinc-200 px-3 rounded-full "
-              >
-                INTECH
-              </p>
-            );
-          })}
+          {demand.tid &&
+            demand.tid.length > 0 &&
+            demand.tid?.map((tid: any, index: any) => {
+              return <TechieCard key={index} tid={tid} />;
+            })}
         </div>
       </div>
       <div className="w-full flex flex-row justify-end">

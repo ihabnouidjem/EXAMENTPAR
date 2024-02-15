@@ -4,6 +4,7 @@ import { Demand } from "./Demand";
 
 export const Dashboard = () => {
   const [demands, setDemands] = useState({ status: "loading", demands: [] });
+  const [users, setUsers] = useState({ status: "loading", users: [] });
   const fetchDemands = () => {
     axios
       .get(`http://localhost:3000/api/demands`)
@@ -18,8 +19,23 @@ export const Dashboard = () => {
         setDemands({ ...demands, status: "fetched", demands: [] });
       });
   };
+  const fetchTechies = () => {
+    axios
+      .get(`http://localhost:3000/api/users/techguys`)
+      .then((res) => {
+        if (res.data) {
+          setUsers({ ...users, status: "fetched", users: res.data });
+        } else {
+          setUsers({ ...users, status: "fetched", users: [] });
+        }
+      })
+      .catch((err) => {
+        setUsers({ ...users, status: "fetched", users: [] });
+      });
+  };
   useEffect(() => {
     fetchDemands();
+    fetchTechies();
   }, []);
   return (
     <div className="w-full flex flex-col gap-6 items-center py-8">
@@ -42,6 +58,7 @@ export const Dashboard = () => {
           </p>
         </div>
       )}
+      <div className="w-full flex flex-col-reverse gap-6 items-center"></div>
       {demands.status === "fetched" &&
         demands.demands?.length > 0 &&
         demands.demands.map((demand, index) => {
